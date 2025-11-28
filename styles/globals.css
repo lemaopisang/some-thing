@@ -1,0 +1,28 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #020617;
+  color: #f8fafc;
+}
+
+::selection {
+  background: rgba(52, 211, 153, 0.35);
+  color: #04111b;
+}
+
+.glass-panel {
+  @apply rounded-2xl border border-white/10 bg-white/5 shadow-glow backdrop-blur;
+}
+
+.log-area {
+  @apply h-[360px] overflow-auto rounded-2xl border border-white/10 bg-slate-900/70 p-4 font-mono text-sm shadow-inner;
+}
+
+.command-input {
+  @apply w-full rounded-xl border border-white/10 bg-slate-900/70 px-4 py-3 text-base text-slate-100 outline-none transition focus:border-brand-400 focus:shadow-glow;
+}
