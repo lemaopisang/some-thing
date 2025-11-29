@@ -5,7 +5,7 @@ Keyboard-first text RPG that evolves the original Node CLI adventure into a web-
 ## Stack
 
 - **Next.js App Router** with React 18 + TypeScript
-- **Zustand** store (`lib/gameStore.ts`) with IndexedDB persistence via `localforage`
+- **Zustand** store (`lib/store/gameStore.ts`) with IndexedDB persistence via `localforage`
 - **TanStack Query** for async workflows (save/load and future Supabase sync)
 - **Tailwind utilities** + custom SVG assets under `public/assets`
 - **Vitest** for logic-level tests (combat math, reward curves)
@@ -18,34 +18,33 @@ npm install
 npm run dev
 ```
 
-Browse to `http://localhost:3000`. Use the command line or the hotkey panel to run turns:
+Browse to `http://localhost:3000`. The command panel exposes every core action:
 
-| Command | Shortcut | Description |
+| Action | Shortcut | Description |
 | --- | --- | --- |
-| `attack` | `A` | Deal weapon damage to the current enemy. |
-| `heal` | `H` | Restore 30% of max HP (enemy still retaliates). |
-| `skip` | `S` | Hold position and let the enemy act. |
-| `status` | `L` | Print the latest HP snapshot without consuming a turn. |
-| `skills` | – | List learned skills and cooldowns. |
-| `skill <id>` | `1-4` | Fire a specific skill: e.g. `skill 1` or `skill fertilizing-strike`. |
-| `help` | `?` | Lists all available commands. |
+| Attack | `A` | Deal weapon damage to the current enemy. |
+| Heal | `H` | Restore 30% of max HP (enemy still retaliates). |
+| Skip | `S` | Hold position and let the enemy act. |
+| Skills | `1-9` | When a skill is ready, use its slot number to trigger it instantly. |
 
-The **Skills** card shows cooldowns and assigns number keys (1‑4) to each ability for quick activation.
+Wave breaks surface as **decisions**—pick an upgrade directly from the drawer to modify stats or earn coins.
 
 ## Local saves
 
 - Zustand persist + IndexedDB keeps the current run alive between refreshes.
-- The **Save & Sync** panel exposes a manual quick-save slot backed by `localforage`. Use it to branch runs or recover later.
+- Progress lives in the `text-rpg-session` store; clear site data to start fresh.
 
 ## Directory map
 
 ```text
 app/              # layout + hero + game surface
-components/       # log, command input, status, save panel, controls
+components/
+    ├─ game/         # GameScreen + log, status, command UI
+    └─ providers/    # shared React providers (React Query, etc.)
 lib/
-    ├─ logic/       # combat math helpers
-    ├─ gameStore.ts # Zustand store + commands
-    ├─ persistence.ts
+    ├─ logic/        # combat math helpers (legacy CLI port)
+    ├─ game/         # modern session + engine abstractions
+    ├─ store/        # Zustand store for the new engine
     └─ legacy/abandoned-code.js (original CLI)
 public/assets/    # SVG grid + emblem assets
 tests/            # Vitest specs (add more as systems grow)

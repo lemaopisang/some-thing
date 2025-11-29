@@ -85,7 +85,7 @@ const createInitialState = (name?: string) => {
   }
 }
 
-const storage = createJSONStorage<GameStore>(() => ({
+const storage = createJSONStorage<Partial<GameStore>>(() => ({
   getItem: async (name) => {
     const raw = await storeStorage.getItem<string>(name)
     return raw ?? null
@@ -272,7 +272,7 @@ export const useGameStore = create<GameStore>()(
     {
       name: 'battle-farm-saga-store',
       storage,
-      partialize: ({ player, enemy, logs, wave, hasStarted, lastSavedAt }) => ({
+      partialize: ({ player, enemy, logs, wave, hasStarted, lastSavedAt }: GameStore): Partial<GameStore> => ({
         player,
         enemy,
         logs,

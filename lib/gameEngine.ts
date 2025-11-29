@@ -15,7 +15,7 @@ class Character {
   _baseMaxHP: number
   _baseAttackPower: number
   _baseDefense: number
-  tempBuffs: any[] = []
+  tempBuffs: unknown[] = []
   rand = new SimpleRandom()
 
   constructor(name:string, hp:number, atk:number, def:number){
